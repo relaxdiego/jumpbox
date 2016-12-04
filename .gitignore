@@ -1,0 +1,31 @@
+*.DS_Store
+*.pem
+*.retry
+*.tfstate
+*.tfstate.backup
+*.pyc
+*~
+.AppleDB
+.AppleDesktop
+.AppleDouble
+.DocumentRevisions-V100
+.LSOverride
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+._*
+.apdisk
+.com.apple.timemachine.donotpresent
+.fseventsd
+.terraform/
+/secrets.sh
+/ssh.cfg
+Icon
+Network Trash Folder
+Temporary Items
+ansible/hosts/ec2.ini
+pubkeys/*
+!pubkeys/.gitkeep
+!pubkeys/remove/.gitkeep
+terraform.tfvars

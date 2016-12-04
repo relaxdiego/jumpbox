@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -e
+
+cd terraform/aws
+
+NAME=$(terraform output Name)
+OWNER=$(terraform output Owner)
+NODE_TYPE=$(terraform output NodeType)
+INSTANCE_FILTERS="tag:Name=${NAME},tag:NodeType=${NODE_TYPE},tag:Owner=${OWNER}"
+AWS_REGION=$(terraform output AwsRegion)
+
+# Share the AWS profile with Ansible
+export AWS_PROFILE=$(terraform output AwsProfile)
+
+cd ../../ansible
+EC2_INI_TEMPLATE_PATH=ec2.ini.template
+EC2_INI_PATH=hosts/ec2.ini
+
+cp $EC2_INI_TEMPLATE_PATH $EC2_INI_PATH
+sed -i -e "s/\$INSTANCE_FILTERS/${INSTANCE_FILTERS}/;s/\$REGIONS/${AWS_REGION}/" $EC2_INI_PATH
+rm -f "${EC2_INI_PATH}-e"
+
+ansible-playbook jumpbox.yaml

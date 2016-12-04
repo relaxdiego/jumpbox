@@ -1,0 +1,40 @@
+---
+- name: Make sure we have a 'wheel' group
+  become: true
+  group:
+    name: wheel
+    state: present
+
+- name: Allow 'wheel' group to have passwordless sudo
+  become: true
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%wheel'
+    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+
+- name: "Add user with passwordless sudo permissions"
+  become: true
+  with_fileglob: ../pubkeys/id_*.pub
+  user:
+    name: "{{item | key_username}}"
+    groups: wheel
+    append: yes
+    createhome: yes
+    shell: /bin/bash
+    state: present
+
+- name: "Add users' public key to authorized_keys"
+  become: true
+  with_fileglob: ../pubkeys/id_*.pub
+  authorized_key:
+    user: "{{item | key_username}}"
+    key:  "{{lookup('file', item)}}"
+
+- name: "Remove unwanted user from hosts"
+  become: true
+  with_fileglob: ../pubkeys/remove/id_*.pub
+  user:
+    name: "{{item | key_username}}"
+    state: absent
+    remove: yes

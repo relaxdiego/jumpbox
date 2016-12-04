@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -e
+
+cd terraform/aws
+terraform apply
+IP=$(terraform output IP)
+
+cd -
+./configure
+
+echo "Your jumpbox is ready at ${IP}"

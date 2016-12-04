@@ -1,0 +1,14 @@
+/*
+   DO NOT EDIT terraform.tfvars.example! Copy it instead to
+   terraform.tfvars and edit that file.
+*/
+
+owner = 
+
+aws_profile =
+aws_region  =
+aws_zone    =
+
+aws_instance_iam_profile  =
+aws_vpc_security_group_id =
+aws_vpc_subnet_id         =
