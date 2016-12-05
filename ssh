@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+cd terraform/aws
+ip=$(terraform output IP)
+ssh $ip
