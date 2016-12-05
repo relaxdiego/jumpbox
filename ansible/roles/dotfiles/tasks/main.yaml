@@ -1,0 +1,47 @@
+---
+- name: Update apt-get cache
+  become: true
+  apt:
+    update_cache: yes
+    cache_valid_time: 604800
+
+- name: Install development libraries
+  become: true
+  apt:
+    name: "{{item}}"
+  with_items:
+    - build-essential
+    - cmake
+    - git
+    - libatk1.0-dev
+    - libbonoboui2-dev
+    - libcairo2-dev
+    - libgnome2-dev
+    - libgnomeui-dev
+    - libgtk2.0-dev
+    - libncurses5-dev
+    - libperl-dev
+    - libx11-dev
+    - libxpm-dev
+    - libxt-dev
+    - python2.7-dev
+    - python3-dev
+    - ruby-dev
+    - software-properties-common
+    - vim-nox-py2
+
+- name: Clone the dotfiles repo
+  become: true
+  git:
+    accept_hostkey: yes
+    repo: https://github.com/relaxdiego/dotfiles.git
+    dest: /srv/dotfiles
+
+- name: Install dotfiles
+  become: true
+  become_flags: "-i"
+  shell: ./setup && touch /tmp/dotfiles-installed
+  args:
+    chdir: /srv/dotfiles
+    executable: /bin/bash
+    creates: /tmp/dotfiles-installed

@@ -19,3 +19,23 @@ Steps
 3. Modify the above file as needed
 
 4. Run `./apply`
+
+
+Adding More Users
+=================
+
+1. Copy the new user's public key to pubkeys/ with the filename pattern
+   id_<username>.pub 
+
+2. Run `./configure`. Ansible will then create a user with <username> 
+   as the username and add the public key to that user's authorized_keys file.
+
+3. The user will now be able to ssh to the machine with `ssh <username>@<ip>`
+
+
+Removing Users
+==============
+
+1. Move the user's public key from pubkeys/ to pubkeys/remove/
+
+2. Run `./configure`

@@ -31,6 +31,13 @@
     user: "{{item | key_username}}"
     key:  "{{lookup('file', item)}}"
 
+- name: "Logout unwanted users"
+  become: true
+  with_fileglob: ../pubkeys/remove/id_*.pub
+  command: /usr/bin/pkill -u {{item | key_username}}
+  failed_when: false
+  changed_when: false
+
 - name: "Remove unwanted user from hosts"
   become: true
   with_fileglob: ../pubkeys/remove/id_*.pub
