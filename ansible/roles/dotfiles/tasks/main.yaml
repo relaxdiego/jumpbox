@@ -40,7 +40,7 @@
 - name: Ensure /tmp/dotfiles-install.log
   file:
     path: /tmp/dotfiles-install.log
-    state: file
+    state: touch
 
 - name: Check if dotfiles already installed
   become: true
@@ -66,7 +66,7 @@
   become_flags: "-i"
   file:
     path: ~/.dotfiles-installed
-    state: file
+    state: touch
 
 - name: Prepare run_once script for each user
   become: true
