@@ -37,11 +37,50 @@
     repo: https://github.com/relaxdiego/dotfiles.git
     dest: /srv/dotfiles
 
-- name: Install dotfiles
+- name: Ensure /tmp/dotfiles-install.log
+  file:
+    path: /tmp/dotfiles-install.log
+    state: file
+
+- name: Check if dotfiles already installed
   become: true
   become_flags: "-i"
-  shell: ./setup && touch /tmp/dotfiles-installed
+  register: dotfiles_install_check
+  ignore_errors: true
+  changed_when: false
+  shell: stat ~/.dotfiles-installed
+  args:
+    executable: /bin/bash
+
+- name: Install dotfiles. tail /tmp/dotfiles-install.log on the jumpbox
+  become: true
+  become_flags: "-i"
+  when: "{{dotfiles_install_check | failed}}"
+  shell: ./setup >> /tmp/dotfiles-install.log
   args:
     chdir: /srv/dotfiles
     executable: /bin/bash
-    creates: /tmp/dotfiles-installed
+
+- name: Ensure ~/.dotfiles-installed
+  become: true
+  become_flags: "-i"
+  file:
+    path: ~/.dotfiles-installed
+    state: file
+
+- name: Prepare run_once script for each user
+  become: true
+  with_fileglob: ../pubkeys/id_*.pub
+  template:
+    force: yes
+    src: run_once.sh
+    dest: /home/{{item | key_username}}/.dotfiles_run_once.sh
+    owner: "{{item | key_username}}"
+    mode: u+rx
+
+- name: Install run_once script for each user
+  become: true
+  with_fileglob: ../pubkeys/id_*.pub
+  lineinfile:
+    dest: /home/{{item | key_username}}/.bashrc
+    line: "~/.dotfiles_run_once.sh"
