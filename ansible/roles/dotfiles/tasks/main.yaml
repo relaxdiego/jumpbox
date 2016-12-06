@@ -10,6 +10,7 @@
   apt:
     name: "{{item}}"
   with_items:
+    - bash-completion
     - build-essential
     - cmake
     - git
@@ -84,3 +85,10 @@
   lineinfile:
     dest: /home/{{item | key_username}}/.bashrc
     line: "~/.dotfiles_run_once.sh"
+
+- name: Set EDITOR env var for each user
+  become: true
+  with_fileglob: ../pubkeys/id_*.pub
+  lineinfile:
+    dest: /home/{{item | key_username}}/.bashrc
+    line: "export EDITOR=vim"
