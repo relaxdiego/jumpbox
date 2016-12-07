@@ -12,6 +12,15 @@
       retries: 30
       delay: 10
 
+    # The following task is just to ensure our Python bootstrapper doesn't
+    # fail. The real apt-get cache with cache validity timeout appears
+    # further down this playbook.
+    - name: Update apt-get cache
+      become: true
+      command: "apt-get -y -q update && touch ~/.run_once_cache_update"
+      args:
+        creates: ~/.run_once_cache_update
+
     - name: Check if Python is installed
       command: which python
       register: python_check
@@ -34,6 +43,11 @@
       raw: "apt-get -y -q install python-pip"
       become: true
 
+    - name: Update apt-get cache
+      become: true
+      apt:
+        update_cache: yes
+        cache_valid_time: 604800
 
 - hosts: jumpbox
   roles:
