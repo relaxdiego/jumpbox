@@ -26,4 +26,4 @@ else
 fi
 
 ansible-playbook $RETRY jumpbox.yaml
-rm *.retry
+rm -f *.retry
