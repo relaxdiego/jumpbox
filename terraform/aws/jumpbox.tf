@@ -11,7 +11,7 @@ data "aws_region" "current" {
 
 resource "aws_instance" "jumpbox" {
     ami = "${lookup(var.amis, data.aws_region.current.name)}"
-    instance_type = "${var.instance_type}"
+    instance_type = "${var.aws_instance_type}"
 
     vpc_security_group_ids      = ["${var.aws_vpc_security_group_id}"]
     subnet_id                   = "${var.aws_vpc_subnet_id}"

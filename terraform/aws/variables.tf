@@ -31,6 +31,10 @@ variable "aws_instance_source_dest_check" {
     description = "Whether to enable source destination checking for the jumpbox"
 }
 
+variable aws_instance_type {
+  default = "t2.large"
+}
+
 ### VARIABLES BELOW MUST NOT BE CHANGED ###
 
 # Images taken from https://cloud-images.ubuntu.com/locator/ec2/
@@ -38,15 +42,15 @@ variable amis {
   description = "Default AMIs to use for nodes depending on the region"
   type = "map"
   default = {
-    ap-northeast-1 = "ami-cb8a3aaa"
-    ap-southeast-1 = "ami-9a7dd0f9"
-    cn-north-1 = "ami-99588cf4"
-    eu-central-1 = "ami-5a04c335"
-    eu-west-1 = "ami-f3326b80"
-    sa-east-1 = "sa-east-1"
-    us-east-1 = "ami-4c11285b"
-    us-west-1 = "ami-c20354a2"
-    us-west-2 = "ami-0ffe576f"
+    ap-northeast-1 = "ami-bcd6b9db"
+    ap-southeast-1 = "ami-ae6259cd"
+    cn-north-1 = "ami-31499d5c"
+    eu-central-1 = "ami-741bda1b"
+    eu-west-1 = "ami-70b59203"
+    sa-east-1 = "ami-0cce5660"
+    us-east-1 = "ami-e13739f6"
+    us-west-1 = "ami-d8bdebb8"
+    us-west-2 = "ami-55ff4a35"
   }
 }
 
@@ -54,6 +58,3 @@ variable default_instance_user {
   default = "ubuntu"
 }
 
-variable instance_type {
-  default = "t2.small"
-}

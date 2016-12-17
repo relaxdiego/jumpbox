@@ -17,7 +17,7 @@
     # further down this playbook.
     - name: Update apt-get cache
       become: true
-      command: "apt-get -y -q update && touch ~/.run_once_cache_update"
+      raw: "apt-get -y -q update && touch ~/.run_once_cache_update"
       args:
         creates: ~/.run_once_cache_update
 
@@ -30,6 +30,7 @@
     - name: Install Python
       when: python_check | failed
       raw: "apt-get -y -q install python"
+      retries: 3
       become: true
 
     - name: Check if pip is installed
@@ -41,6 +42,7 @@
     - name: Install pip
       when: pip_check | failed
       raw: "apt-get -y -q install python-pip"
+      retries: 3
       become: true
 
     - name: Update apt-get cache
