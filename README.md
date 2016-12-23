@@ -1,3 +1,5 @@
+Quickly set up your own jumpbox in AWS. Installs my [dotfiles](https://github.com/relaxdiego/dotfiles) too!
+
 Prerequisites
 =============
 
@@ -11,7 +13,7 @@ Prerequisites
 Steps
 =====
 
-1. Ensure you have a profile you can use in ~/.aws/credentials. Consult the
+1. Ensure you have a profile you can use in `~/.aws/credentials`. Consult the
    AWS SDK documentation for help on setting your shared credentials.
 
 2. Run `cp terraform/aws/terraform.tfvars.example terraform/aws/terraform.tfvars`
@@ -24,11 +26,11 @@ Steps
 Adding More Users
 =================
 
-1. Copy the new user's public key to pubkeys/ with the filename pattern
-   id_<username>.pub 
+1. Copy the new user's public key to `pubkeys/` with the filename pattern
+   `id_<username>.pub`
 
 2. Run `./configure`. Ansible will then create a user with <username> 
-   as the username and add the public key to that user's authorized_keys file.
+   as the username and add the public key to that user's `~/.ssh/authorized_keys`.
 
 3. The user will now be able to ssh to the machine with `ssh <username>@<ip>`
 
@@ -36,6 +38,6 @@ Adding More Users
 Removing Users
 ==============
 
-1. Move the user's public key from pubkeys/ to pubkeys/remove/
+1. Move the user's public key from `pubkeys/` to `pubkeys/remove/`
 
 2. Run `./configure`
