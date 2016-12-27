@@ -20,6 +20,8 @@
       raw: "apt-get -y -q update && touch ~/.run_once_cache_update"
       args:
         creates: ~/.run_once_cache_update
+      retries: 10
+      delay: 10
 
     - name: Check if Python is installed
       command: which python
