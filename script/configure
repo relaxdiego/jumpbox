@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 set -e
 
-cd terraform/aws
+script_path=$(dirname "${BASH_SOURCE[0]}")
+source $script_path/common > /dev/null
+
+cd $provisioner_dir/aws
 
 NAME=$(terraform output Name)
 OWNER=$(terraform output Owner)
@@ -12,7 +15,8 @@ AWS_REGION=$(terraform output AwsRegion)
 # Share the AWS profile with ansible-playbook below
 export AWS_PROFILE=$(terraform output AwsProfile)
 
-cd ../../ansible
+cd $configurator_dir
+
 EC2_INI_TEMPLATE_PATH=ec2.ini.template
 EC2_INI_PATH=hosts/ec2.ini
 cp $EC2_INI_TEMPLATE_PATH $EC2_INI_PATH

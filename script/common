@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -e
+
+# Set the $approot variable
+cd "$(dirname "${BASH_SOURCE[0]}")/.." && \
+    approot=$(pwd) && \
+    cd -
+
+script_dir=$approot/script
+provisioner_dir=$approot/provisioner
+configurator_dir=$approot/configurator

@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -e
-cd terraform/aws
+
+script_path=$(dirname "${BASH_SOURCE[0]}")
+source $script_path/common > /dev/null
+
+cd $provisioner_dir/aws
+
 echo "=============================="
 terraform output
 echo "=============================="

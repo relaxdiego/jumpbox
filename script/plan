@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -e
+
+script_path=$(dirname "${BASH_SOURCE[0]}")
+source $script_path/common > /dev/null
+
+cd $provisioner_dir/aws
+
+terraform plan

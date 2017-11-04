@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -e
+
+script_path=$(dirname "${BASH_SOURCE[0]}")
+source $script_path/common > /dev/null
+
+cd $provisioner_dir/aws
+
+terraform apply
+IP=$(terraform output IP)
+
+cd $approot
+$script_dir/configure
+
+echo "Your jumpbox is ready at ${IP}"

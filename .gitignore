@@ -24,7 +24,7 @@
 Icon
 Network Trash Folder
 Temporary Items
-ansible/hosts/ec2.ini
+ec2.ini
 pubkeys/*.*
 !pubkeys/.gitkeep
 pubkeys/remove/*.*
